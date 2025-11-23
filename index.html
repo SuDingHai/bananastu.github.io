@@ -386,8 +386,21 @@
                 };
 
                 const saveHistory = () => {
-                    localStorage.setItem('gemini_history', JSON.stringify(history.value));
-                    localStorage.setItem('gemini_max_history', maxHistorySize.value.toString());
+                    try {
+                        localStorage.setItem('gemini_history', JSON.stringify(history.value));
+                        localStorage.setItem('gemini_max_history', maxHistorySize.value.toString());
+                    } catch (e) {
+                        // Handle storage quota exceeded
+                        if (e.name === 'QuotaExceededError' || e.code === 22 || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+                            if (history.value.length > 0) {
+                                // Remove the oldest item (last in array) and retry
+                                history.value.pop();
+                                saveHistory();
+                            }
+                        } else {
+                            console.error('Failed to save history:', e);
+                        }
+                    }
                 };
 
                 const clearHistory = () => {
