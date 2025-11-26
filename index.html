@@ -153,7 +153,7 @@
                                     <div class="relative">
                                         <!-- Custom Select Button -->
                                         <button @click="toggleModelDropdown" class="apple-input rounded-xl w-full py-2 px-3 text-left text-gray-800 text-sm flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all relative z-50 bg-white/50">
-                                            <span class="truncate font-medium">{{ selectedModel }}</span>
+                                            <span class="break-all font-medium pr-2">{{ selectedModel }}</span>
                                             <svg class="h-4 w-4 text-gray-400 transition-transform duration-300" :class="{'rotate-180': isModelDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -166,7 +166,7 @@
                                                      @click="selectModel(model.value)"
                                                      class="px-3 py-2 rounded-lg text-sm cursor-pointer transition-all flex items-center justify-between group"
                                                      :class="{'bg-blue-500 text-white shadow-md shadow-blue-500/20': selectedModel === model.value, 'hover:bg-gray-100 text-gray-700': selectedModel !== model.value}">
-                                                    <span class="font-medium truncate">{{ model.label }}</span>
+                                                    <span class="font-medium break-all pr-2">{{ model.label }}</span>
                                                     <svg v-if="selectedModel === model.value" class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                                     </svg>
@@ -601,6 +601,7 @@
                 const isModelDropdownOpen = ref(false);
                 const models = [
                     { value: 'gemini-3-pro-image-preview', label: 'gemini-3-pro-image-preview' },
+                    { value: 'gemini-3-pro-image-preview-4k', label: 'gemini-3-pro-image-preview-4k' },
                     { value: 'gemini-2.5-flash-image', label: 'gemini-2.5-flash-image' }
                 ];
 
