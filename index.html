@@ -590,11 +590,28 @@
                 };
 
                 const extractImage = (content) => {
+                    let url = null;
+                    
+                    // 1. 标准 Markdown 格式: ![alt](url)
                     const mdMatch = content.match(/!\[.*?\]\((.*?)\)/);
-                    if (mdMatch) return mdMatch[1];
-                    const htmlMatch = content.match(/<img.*?src=["'](.*?)["']/);
-                    if (htmlMatch) return htmlMatch[1];
-                    return null;
+                    if (mdMatch) {
+                        url = mdMatch[1];
+                    }
+                    
+                    // 2. HTML img 标签格式
+                    if (!url) {
+                        const htmlMatch = content.match(/<img.*?src=["'](.*?)["']/);
+                        if (htmlMatch) {
+                            url = htmlMatch[1];
+                        }
+                    }
+                    
+                    // 处理 URL：如果没有协议前缀，添加 http://
+                    if (url && !url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('data:')) {
+                        url = 'http://' + url;
+                    }
+                    
+                    return url;
                 };
 
                 const selectedModel = ref('gemini-3-pro-image-preview');
