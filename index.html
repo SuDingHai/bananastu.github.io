@@ -606,9 +606,22 @@
                         }
                     }
                     
-                    // 处理 URL：如果没有协议前缀，添加 https://（避免混合内容问题）
-                    if (url && !url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('data:')) {
-                        url = 'https://' + url;
+                    // 处理 URL
+                    if (url) {
+                        // data: URL 直接返回
+                        if (url.startsWith('data:')) {
+                            return url;
+                        }
+                        
+                        // 如果没有协议前缀，添加 http://
+                        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                            url = 'http://' + url;
+                        }
+                        
+                        // 在 HTTPS 页面上，通过代理加载 HTTP 图片（解决混合内容问题）
+                        if (window.location.protocol === 'https:' && url.startsWith('http://')) {
+                            url = 'https://wsrv.nl/?url=' + encodeURIComponent(url);
+                        }
                     }
                     
                     return url;
