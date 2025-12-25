@@ -606,9 +606,9 @@
                         }
                     }
                     
-                    // 处理 URL：如果没有协议前缀，添加 http://
+                    // 处理 URL：如果没有协议前缀，添加 https://（避免混合内容问题）
                     if (url && !url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('data:')) {
-                        url = 'http://' + url;
+                        url = 'https://' + url;
                     }
                     
                     return url;
